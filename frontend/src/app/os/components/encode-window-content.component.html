@@ -1,0 +1,43 @@
+<div class="window-content-inner">
+  <div class="encode-container">
+    <div class="drop-zone" 
+         (dragover)="onDragOver($event)"
+         (dragleave)="onDragLeave($event)"
+         (drop)="onDrop($event)"
+         [class.dragging]="isDragging">
+      <div class="drop-content" *ngIf="!encodeFile">
+        <div class="drop-icon">📁</div>
+        <p class="drop-text">Drag & Drop Image Here</p>
+        <p class="drop-hint">or click to select</p>
+        <input 
+          type="file" 
+          id="encodeFileInput"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          class="file-input-hidden"
+        >
+        <label for="encodeFileInput" class="file-label-btn">Select Image</label>
+      </div>
+      <div class="file-preview" *ngIf="encodeFile && !encodedImageUrl">
+        <img [src]="encodePreviewUrl" alt="Preview" class="preview-img">
+        <p class="file-name">{{ encodeFile.name }}</p>
+      </div>
+      <div class="encoded-result" *ngIf="encodedImageUrl">
+        <img [src]="encodedImageUrl" alt="Encoded" class="preview-img">
+        <p class="success-text">✓ Encoded Successfully</p>
+      </div>
+    </div>
+
+    <div class="message-section" *ngIf="encodeFile && !encodedImageUrl">
+      <textarea 
+        [(ngModel)]="message"
+        placeholder="Enter your message here..."
+        class="message-input"
+        rows="4"
+      ></textarea>
+      <button class="encode-btn" (click)="onEncode()" [disabled]="loading || !message.trim()">
+        {{ loading ? 'Encoding...' : 'Encode' }}
+      </button>
+    </div>
+  </div>
+</div>

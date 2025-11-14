@@ -1,0 +1,88 @@
+<div class="start-menu" [class.open]="isOpen">
+  <!-- Start Button (always visible) -->
+  <div class="start-button" (click)="toggle()">
+    <span class="start-icon">◆</span>
+    <span class="start-text">AI OS</span>
+  </div>
+  
+  <div class="menu-overlay" *ngIf="isOpen" (click)="close()"></div>
+  
+  <div class="menu-panel" *ngIf="isOpen" (click)="$event.stopPropagation()">
+    <!-- Search Bar at Top -->
+    <div class="menu-search">
+      <div class="search-icon">🔍</div>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Type here to search..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearch($event)"
+      >
+    </div>
+
+    <!-- Main Content -->
+    <div class="menu-content">
+      <!-- Left Side - Pinned Apps -->
+      <div class="menu-left">
+        <div class="menu-section">
+          <div class="section-title">Pinned</div>
+          <div class="pinned-apps">
+            <div 
+              *ngFor="let item of pinnedApps"
+              class="pinned-app"
+              (click)="onItemClick(item.action)"
+              [title]="item.label"
+            >
+              <div class="app-icon">{{ item.icon }}</div>
+              <div class="app-label">{{ item.label }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-section">
+          <div class="section-title">Recommended</div>
+          <div class="recommended-items">
+            <div 
+              *ngFor="let item of recommendedItems"
+              class="recommended-item"
+              (click)="onItemClick(item.action)"
+            >
+              <div class="item-icon">{{ item.icon }}</div>
+              <div class="item-info">
+                <div class="item-name">{{ item.label }}</div>
+                <div class="item-meta">{{ item.meta }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - News/Feed -->
+      <div class="menu-right">
+        <div class="menu-section">
+          <div class="section-title">News & Interests</div>
+          <div class="news-feed">
+            <div class="news-item" *ngFor="let news of newsItems">
+              <div class="news-image">📰</div>
+              <div class="news-content">
+                <div class="news-title">{{ news.title }}</div>
+                <div class="news-source">{{ news.source }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="menu-footer">
+      <div class="user-info">
+        <div class="user-avatar">A</div>
+        <div class="user-name">User</div>
+      </div>
+      <div class="power-options">
+        <div class="power-btn" (click)="onItemClick('shutdown')" title="Shut down">⏻</div>
+      </div>
+    </div>
+  </div>
+</div>

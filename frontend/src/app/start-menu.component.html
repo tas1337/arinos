@@ -1,0 +1,35 @@
+<div class="start-menu" [class.open]="isOpen">
+  <div class="start-button" (click)="toggle()">
+    <span class="start-icon">◆</span>
+    <span class="start-text">Arin OS</span>
+  </div>
+  
+  <div class="menu-panel" *ngIf="isOpen" (click)="$event.stopPropagation()">
+    <div class="menu-header">
+      <div class="menu-logo">◆</div>
+      <div class="menu-title">Arin OS</div>
+    </div>
+    <div class="menu-items">
+      <div 
+        *ngFor="let item of menuItems"
+        class="menu-item"
+        [class.separator]="item.separator"
+        (click)="!item.separator && onItemClick(item.action)"
+      >
+        <span *ngIf="!item.separator" class="menu-icon">{{ item.icon }}</span>
+        <span *ngIf="!item.separator" class="menu-label">{{ item.label }}</span>
+      </div>
+    </div>
+    <div class="menu-footer">
+      <div class="user-info">
+        <div class="user-avatar">A</div>
+        <div class="user-name">User</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="menu-overlay" *ngIf="isOpen" (click)="close()"></div>
+
+
+

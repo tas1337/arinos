@@ -1,0 +1,27 @@
+<div class="taskbar">
+  <div class="taskbar-left">
+    <div class="taskbar-windows">
+      <div 
+        *ngFor="let window of windows"
+        class="taskbar-window-icon"
+        [class.active]="!window.minimized"
+        (click)="restoreWindow(window.id)"
+        [title]="getWindowTitle(window.type)"
+      >
+        <span class="window-icon-emoji">
+          {{ window.type === 'help' ? '📖' : window.type === 'encode' ? '🔒' : window.type === 'decode' ? '🔓' : window.type === 'files' ? '📁' : window.type === 'settings' ? '⚙️' : window.type === 'browser' ? '🌐' : '📄' }}
+        </span>
+        <span class="window-icon-label">{{ getWindowTitle(window.type) }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="taskbar-center">
+    <app-start-menu (openWindow)="onStartMenuOpen($event)"></app-start-menu>
+  </div>
+  <div class="taskbar-right">
+    <div class="taskbar-icon" title="WiFi">📶</div>
+    <div class="taskbar-icon" title="Sound">🔊</div>
+    <div class="taskbar-time">{{ currentTime }}</div>
+  </div>
+</div>
+

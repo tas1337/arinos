@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+# Install fontconfig and fonts for text rendering
+RUN apk add --no-cache fontconfig ttf-dejavu
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+RUN mkdir -p uploads
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+
+

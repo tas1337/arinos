@@ -1,0 +1,31 @@
+<div 
+  class="window"
+  [style.left.px]="x"
+  [style.top.px]="y"
+  [style.width.px]="width"
+  [style.height.px]="height"
+  [class.minimized]="minimized"
+  [class.maximized]="maximized"
+  (mousedown)="focus.emit()"
+>
+  <div class="window-titlebar" (mousedown)="onMouseDown($event, 'drag')" (click)="$event.stopPropagation()">
+    <div class="window-title">{{ title }}</div>
+    <div class="window-controls">
+      <button class="window-btn minimize-btn" (click)="onMinimize()" title="Minimize">−</button>
+      <button class="window-btn maximize-btn" (click)="onMaximize()" title="Maximize">□</button>
+      <button class="window-btn close-btn" (click)="onClose()" title="Close">×</button>
+    </div>
+  </div>
+  <div class="window-content">
+    <ng-content></ng-content>
+  </div>
+  <div class="resize-handle resize-top" (mousedown)="onMouseDown($event, 'resize-top')"></div>
+  <div class="resize-handle resize-right" (mousedown)="onMouseDown($event, 'resize-right')"></div>
+  <div class="resize-handle resize-bottom" (mousedown)="onMouseDown($event, 'resize-bottom')"></div>
+  <div class="resize-handle resize-left" (mousedown)="onMouseDown($event, 'resize-left')"></div>
+  <div class="resize-handle resize-top-right" (mousedown)="onMouseDown($event, 'resize-top-right')"></div>
+  <div class="resize-handle resize-bottom-right" (mousedown)="onMouseDown($event, 'resize-bottom-right')"></div>
+  <div class="resize-handle resize-bottom-left" (mousedown)="onMouseDown($event, 'resize-bottom-left')"></div>
+  <div class="resize-handle resize-top-left" (mousedown)="onMouseDown($event, 'resize-top-left')"></div>
+</div>
+

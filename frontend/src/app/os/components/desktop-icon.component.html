@@ -1,0 +1,13 @@
+<div 
+  class="desktop-icon" 
+  [style.left.px]="currentX"
+  [style.top.px]="currentY"
+  (mousedown)="onMouseDown($event)"
+  [class.dragging]="isDragging"
+>
+  <div class="icon-image">{{ icon }}</div>
+  <div class="icon-label">{{ label }}</div>
+</div>
+
+
+

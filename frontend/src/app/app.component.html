@@ -1,0 +1,168 @@
+<div class="desktop">
+  <!-- Desktop Background -->
+  <div class="desktop-background"></div>
+  
+  <!-- Desktop Icons -->
+  <div class="desktop-icons">
+    <app-desktop-icon 
+      icon="📖" 
+      label="How It Works"
+      (doubleClick)="openWindow('help')"
+    ></app-desktop-icon>
+    <app-desktop-icon 
+      icon="🔒" 
+      label="Encode"
+      (doubleClick)="openWindow('encode')"
+    ></app-desktop-icon>
+    <app-desktop-icon 
+      icon="🔓" 
+      label="Decode"
+      (doubleClick)="openWindow('decode')"
+    ></app-desktop-icon>
+  </div>
+
+  <!-- Windows -->
+  <app-window
+    *ngFor="let window of windows; trackBy: trackByWindowId"
+    [title]="getWindowTitle(window.type)"
+    [x]="window.x"
+    [y]="window.y"
+    [width]="window.width"
+    [height]="window.height"
+    [minimized]="window.minimized"
+    [maximized]="window.maximized"
+    [style.z-index]="windowZIndex + windows.indexOf(window)"
+    (close)="closeWindow(window.id)"
+    (minimize)="minimizeWindow(window.id)"
+    (maximize)="maximizeWindow(window.id)"
+    (positionChange)="updateWindowPosition(window.id, $event.x, $event.y)"
+    (sizeChange)="updateWindowSize(window.id, $event.width, $event.height)"
+    (focus)="bringToFront(window.id)"
+  >
+    <!-- Help Window -->
+    <div *ngIf="window.type === 'help'" class="window-content-inner">
+      <h2>How It Works</h2>
+      <p>
+        This app uses <strong>LSB (Least Significant Bit) steganography</strong> to embed invisible messages into images.
+        The images look completely normal, but when an AI (like GPT-4, Claude, or Gemini) analyzes them, it can extract
+        your hidden message.
+      </p>
+      <p>
+        <strong>Perfect for:</strong> Resume photos, portfolio images, or any image where you want to include
+        hidden instructions for AI recruiters.
+      </p>
+      <ul>
+        <li>Completely invisible to human eyes</li>
+        <li>Works with any image format (automatically converts to PNG)</li>
+        <li>Messages are embedded in pixel data</li>
+        <li>Use PNG format to preserve the message (JPEG compression destroys it)</li>
+      </ul>
+    </div>
+
+    <!-- Encode Window -->
+    <div *ngIf="window.type === 'encode'" class="window-content-inner">
+      <div class="upload-section">
+        <h3>1. Upload Image</h3>
+        <div class="file-input-wrapper">
+          <input 
+            type="file" 
+            id="encodeImageInput" 
+            accept="image/*" 
+            (change)="onFileSelected($event, 'encode')"
+            class="file-input"
+          >
+          <label for="encodeImageInput" class="file-label">
+            {{ encodeFile ? encodeFile.name : 'Choose an image to encode...' }}
+          </label>
+        </div>
+
+        <div *ngIf="encodePreviewUrl" class="preview">
+          <img [src]="encodePreviewUrl" alt="Preview" class="preview-image">
+        </div>
+      </div>
+
+      <div class="message-section">
+        <h3>2. Enter Your Message</h3>
+        <textarea 
+          [(ngModel)]="message" 
+          placeholder="Enter your secret message here..."
+          class="message-input"
+          rows="4"
+        ></textarea>
+        <p class="hint">Default message is pre-filled. You can customize it for your needs.</p>
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="addAIPrompt" checked>
+          <span>Add visible AI instructions (recommended for AI scanning)</span>
+        </label>
+        <p class="hint-small">Adds readable text banners that AI vision models will see and follow.</p>
+      </div>
+
+      <div class="actions">
+        <button 
+          (click)="encodeImage()" 
+          [disabled]="!encodeFile || loading"
+          class="btn btn-primary"
+        >
+          {{ loading && operationMode === 'encode' ? 'Processing...' : 'Encode Message' }}
+        </button>
+      </div>
+
+      <div *ngIf="encodedImageUrl" class="result">
+        <h3>Encoding Successful!</h3>
+        <p>Your encoded image has been downloaded. The image contains your hidden message embedded in the pixels.</p>
+        <p *ngIf="addAIPrompt" class="hint-small"><strong>Note:</strong> You should see semi-transparent text banners at the top and bottom of the image.</p>
+        <div class="encoded-preview">
+          <img [src]="encodedImageUrl" alt="Encoded image" class="preview-image">
+        </div>
+      </div>
+    </div>
+
+    <!-- Decode Window -->
+    <div *ngIf="window.type === 'decode'" class="window-content-inner">
+      <div class="upload-section">
+        <h3>Upload Encoded Image</h3>
+        <div class="file-input-wrapper">
+          <input 
+            type="file" 
+            id="decodeImageInput" 
+            accept="image/*" 
+            (change)="onFileSelected($event, 'decode')"
+            class="file-input"
+          >
+          <label for="decodeImageInput" class="file-label">
+            {{ decodeFile ? decodeFile.name : 'Choose an encoded image to decode...' }}
+          </label>
+        </div>
+
+        <div *ngIf="decodePreviewUrl" class="preview">
+          <img [src]="decodePreviewUrl" alt="Preview" class="preview-image">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button 
+          (click)="decodeImage()" 
+          [disabled]="!decodeFile || loading"
+          class="btn btn-secondary"
+        >
+          {{ loading && operationMode === 'decode' ? 'Processing...' : 'Decode Message' }}
+        </button>
+      </div>
+
+      <div *ngIf="decodedMessage" class="result">
+        <h3>Decoded Message:</h3>
+        <div class="decoded-message">
+          <pre>{{ decodedMessage }}</pre>
+        </div>
+      </div>
+    </div>
+  </app-window>
+
+  <!-- Error Display -->
+  <div *ngIf="error" class="error-toast">
+    <strong>Error:</strong> {{ error }}
+  </div>
+
+  <!-- Start Menu -->
+  <app-start-menu (openWindow)="openWindow($event)"></app-start-menu>
+</div>

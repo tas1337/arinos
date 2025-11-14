@@ -1,0 +1,151 @@
+.files-container {
+  display: flex;
+  height: 100%;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.files-sidebar {
+  width: 200px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.files-sidebar h3 {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #ffffff;
+}
+
+.folder-item:hover {
+  background: rgba(255, 0, 150, 0.2);
+}
+
+.folder-icon {
+  font-size: 18px;
+}
+
+.folder-name {
+  flex: 1;
+  font-size: 13px;
+}
+
+.folder-count {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.files-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 10, 20, 0.5);
+}
+
+.files-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.toolbar-btn {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.toolbar-btn:hover {
+  background: rgba(255, 0, 150, 0.2);
+  border-color: rgba(255, 0, 150, 0.5);
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.path-input {
+  flex: 1;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+}
+
+.files-grid {
+  flex: 1;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+}
+
+.file-item:hover {
+  background: rgba(255, 0, 150, 0.2);
+  border-color: rgba(255, 0, 150, 0.5);
+  transform: translateY(-2px);
+}
+
+.file-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.file-name {
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.file-meta {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+

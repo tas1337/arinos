@@ -1,0 +1,24 @@
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="top-bar-icon">🤖</div>
+    <div class="top-bar-title">AI OS</div>
+  </div>
+  <div class="top-bar-center">
+    <div class="search-container">
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Search..."
+        (input)="onSearch($event)"
+        [value]="searchQuery"
+      >
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+  <div class="top-bar-right">
+    <div class="top-bar-icon-btn" title="Notifications">🔔</div>
+    <div class="top-bar-icon-btn" title="Settings">⚙️</div>
+    <div class="top-bar-icon-btn" title="User">👤</div>
+  </div>
+</div>
+

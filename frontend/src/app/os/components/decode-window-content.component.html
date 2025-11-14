@@ -1,0 +1,35 @@
+<div class="window-content-inner">
+  <div class="decode-container">
+    <div class="drop-zone" 
+         (dragover)="onDragOver($event)"
+         (dragleave)="onDragLeave($event)"
+         (drop)="onDrop($event)"
+         [class.dragging]="isDragging">
+      <div class="drop-content" *ngIf="!decodeFile && !decodedMessage">
+        <div class="drop-icon">📁</div>
+        <p class="drop-text">Drag & Drop Image Here</p>
+        <p class="drop-hint">or click to select</p>
+        <input 
+          type="file" 
+          id="decodeFileInput"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          class="file-input-hidden"
+        >
+        <label for="decodeFileInput" class="file-label-btn">Select Image</label>
+      </div>
+      <div class="file-preview" *ngIf="decodeFile && !decodedMessage">
+        <img [src]="decodePreviewUrl" alt="Preview" class="preview-img">
+        <p class="file-name">{{ decodeFile.name }}</p>
+        <p class="decoding-text" *ngIf="loading">Decoding...</p>
+      </div>
+      <div class="decoded-result" *ngIf="decodedMessage">
+        <img [src]="decodePreviewUrl" alt="Decoded" class="preview-img">
+        <div class="message-box">
+          <h3>Decoded Message:</h3>
+          <div class="message-content">{{ decodedMessage }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

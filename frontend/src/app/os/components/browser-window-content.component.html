@@ -1,0 +1,30 @@
+<div class="window-content-inner">
+  <div class="browser-container">
+    <div class="browser-toolbar">
+      <div class="browser-controls">
+        <button class="toolbar-btn" (click)="goBack()" title="Back">←</button>
+        <button class="toolbar-btn" (click)="goForward()" title="Forward">→</button>
+        <button class="toolbar-btn" (click)="refresh()" title="Refresh">⟳</button>
+      </div>
+      <div class="browser-url-bar">
+        <input 
+          type="text" 
+          class="url-input" 
+          [(ngModel)]="urlInput"
+          (keypress)="onUrlKeyPress($event)"
+          placeholder="Enter URL..."
+        >
+        <button class="go-btn" (click)="navigate()">Go</button>
+      </div>
+    </div>
+    <div class="browser-content">
+      <iframe 
+        [src]="currentUrl | safeUrl"
+        frameborder="0"
+        class="browser-iframe"
+        allow="camera; microphone; geolocation"
+      ></iframe>
+    </div>
+  </div>
+</div>
+

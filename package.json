@@ -1,0 +1,19 @@
+{
+  "name": "stego-app",
+  "version": "1.0.0",
+  "description": "Steganography app with Node.js backend and Angular frontend",
+  "scripts": {
+    "dev": "docker-compose -f deployment/docker-compose.dev.yml up --build",
+    "dev:stop": "docker-compose -f deployment/docker-compose.dev.yml down",
+    "build": "docker-compose -f deployment/docker-compose.yml build",
+    "start": "docker-compose -f deployment/docker-compose.yml up",
+    "stop": "docker-compose -f deployment/docker-compose.yml down",
+    "deploy": "node deployment/deploy.js",
+    "fly:login": "flyctl auth login",
+    "fly:deploy": "cd deployment && flyctl deploy --config fly.toml"
+  },
+  "keywords": ["steganography", "nodejs", "angular"],
+  "author": "",
+  "license": "MIT"
+}
+

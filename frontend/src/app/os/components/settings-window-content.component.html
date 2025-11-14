@@ -1,0 +1,36 @@
+<div class="window-content-inner">
+  <div class="settings-container">
+    <div class="settings-sidebar">
+      <h2>Settings</h2>
+      <div class="settings-categories">
+        <div 
+          *ngFor="let setting of settings"
+          class="category-item"
+          [class.active]="selectedCategory === setting.category"
+          (click)="selectedCategory = setting.category"
+        >
+          <span class="category-icon">{{ setting.icon }}</span>
+          <span class="category-name">{{ setting.category }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="settings-main">
+      <div *ngIf="selectedCategory" class="settings-content">
+        <h3>{{ selectedCategory }}</h3>
+        <div class="settings-list">
+          <div *ngFor="let item of getSelectedCategoryItems()" class="setting-item">
+            <div class="setting-label">{{ item }}</div>
+            <div class="setting-control">
+              <input type="checkbox" [checked]="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!selectedCategory" class="settings-placeholder">
+        <div class="placeholder-icon">⚙️</div>
+        <p>Select a category to view settings</p>
+      </div>
+    </div>
+  </div>
+</div>
+

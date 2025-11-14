@@ -1,0 +1,31 @@
+<div class="window-content-inner">
+  <div class="files-container">
+    <div class="files-sidebar">
+      <h3>Quick Access</h3>
+      <div class="folder-list">
+        <div *ngFor="let folder of folders" class="folder-item">
+          <span class="folder-icon">{{ folder.icon }}</span>
+          <span class="folder-name">{{ folder.name }}</span>
+          <span class="folder-count">({{ folder.items }})</span>
+        </div>
+      </div>
+    </div>
+    <div class="files-main">
+      <div class="files-toolbar">
+        <button class="toolbar-btn">← Back</button>
+        <button class="toolbar-btn">→ Forward</button>
+        <button class="toolbar-btn">↑ Up</button>
+        <div class="toolbar-spacer"></div>
+        <input type="text" class="path-input" value="C:\Users\User\Desktop" readonly>
+      </div>
+      <div class="files-grid">
+        <div *ngFor="let file of recentFiles" class="file-item">
+          <div class="file-icon">{{ file.icon }}</div>
+          <div class="file-name">{{ file.name }}</div>
+          <div class="file-meta">{{ file.size }} • {{ file.date }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

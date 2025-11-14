@@ -1,0 +1,38 @@
+.window-content-inner {
+  color: #ffffff;
+}
+
+.window-content-inner h2 {
+  color: #00ffff;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.window-content-inner p {
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.window-content-inner ul {
+  margin-left: 1.5rem;
+  margin-top: 1rem;
+  list-style: none;
+}
+
+.window-content-inner li {
+  margin-bottom: 0.8rem;
+  color: #ffffff;
+  position: relative;
+  padding-left: 20px;
+}
+
+.window-content-inner li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: #00ffff;
+  font-size: 0.8rem;
+}
+

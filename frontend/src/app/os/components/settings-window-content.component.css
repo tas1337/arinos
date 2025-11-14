@@ -1,0 +1,122 @@
+.settings-container {
+  display: flex;
+  height: 100%;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.settings-sidebar {
+  width: 240px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-sidebar h2 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ff0096 0%, #00ffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.settings-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #ffffff;
+}
+
+.category-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.category-item.active {
+  background: rgba(255, 0, 150, 0.3);
+  border: 1px solid rgba(255, 0, 150, 0.5);
+}
+
+.category-icon {
+  font-size: 20px;
+}
+
+.category-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.settings-main {
+  flex: 1;
+  padding: 24px;
+  background: rgba(10, 10, 20, 0.5);
+  overflow-y: auto;
+}
+
+.settings-content h3 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.setting-label {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.setting-control input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #ff0096;
+}
+
+.settings-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.placeholder-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.settings-placeholder p {
+  font-size: 16px;
+}
+

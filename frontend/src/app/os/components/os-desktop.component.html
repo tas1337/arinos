@@ -1,0 +1,85 @@
+<div class="desktop">
+  <!-- Desktop Background -->
+  <div class="desktop-background"></div>
+  
+  <!-- Desktop Icons -->
+  <app-desktop-icon 
+    *ngFor="let iconPos of iconPositions"
+    [icon]="getIconEmoji(iconPos.id)"
+    [label]="getIconLabel(iconPos.id)"
+    [x]="iconPos.x"
+    [y]="iconPos.y"
+    (doubleClick)="openWindow(iconPos.id)"
+    (positionChange)="updateIconPosition(iconPos.id, $event.x, $event.y)"
+  ></app-desktop-icon>
+
+  <!-- Windows -->
+  <app-window
+    *ngFor="let window of windows; trackBy: trackByWindowId"
+    [title]="getWindowTitle(window.type)"
+    [x]="window.x"
+    [y]="window.y"
+    [width]="window.width"
+    [height]="window.height"
+    [minimized]="window.minimized"
+    [maximized]="window.maximized"
+    [style.z-index]="getZIndex(window.id)"
+    (close)="closeWindow(window.id)"
+    (minimize)="minimizeWindow(window.id)"
+    (maximize)="maximizeWindow(window.id)"
+    (positionChange)="updateWindowPosition(window.id, $event.x, $event.y)"
+    (sizeChange)="updateWindowSize(window.id, $event.width, $event.height)"
+    (focus)="bringToFront(window.id)"
+  >
+    <!-- Help Window -->
+    <app-help-window-content *ngIf="window.type === 'help'"></app-help-window-content>
+
+    <!-- Encode Window -->
+    <app-encode-window-content 
+      *ngIf="window.type === 'encode'"
+      [message]="message"
+      [encodeFile]="encodeFile"
+      [encodePreviewUrl]="encodePreviewUrl"
+      [encodedImageUrl]="encodedImageUrl"
+      [loading]="loading && operationMode === 'encode'"
+      (messageChange)="message = $event"
+      (fileSelected)="onFileSelected($event, 'encode')"
+      (encode)="encodeImage()"
+    ></app-encode-window-content>
+
+    <!-- Decode Window -->
+    <app-decode-window-content 
+      *ngIf="window.type === 'decode'"
+      [decodeFile]="decodeFile"
+      [decodePreviewUrl]="decodePreviewUrl"
+      [decodedMessage]="decodedMessage"
+      [loading]="loading && operationMode === 'decode'"
+      (fileSelected)="onFileSelected($event, 'decode')"
+      (decode)="decodeImage()"
+    ></app-decode-window-content>
+
+    <!-- Files Window -->
+    <app-files-window-content 
+      *ngIf="window.type === 'files'"
+    ></app-files-window-content>
+
+    <!-- Settings Window -->
+    <app-settings-window-content 
+      *ngIf="window.type === 'settings'"
+    ></app-settings-window-content>
+
+    <!-- Browser Window -->
+    <app-browser-window-content 
+      *ngIf="window.type === 'browser'"
+    ></app-browser-window-content>
+  </app-window>
+
+  <!-- Error Display -->
+  <div *ngIf="error" class="error-toast">
+    <strong>Error:</strong> {{ error }}
+  </div>
+
+  <!-- Taskbar -->
+  <app-taskbar (openWindow)="onTaskbarOpenWindow($event)"></app-taskbar>
+</div>
+
