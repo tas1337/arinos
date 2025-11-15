@@ -15,11 +15,14 @@ export class EncodeWindowContentComponent {
   @Output() messageChange = new EventEmitter<string>();
   @Output() fileSelected = new EventEmitter<Event>();
   @Output() encode = new EventEmitter<void>();
+  @Output() reset = new EventEmitter<void>();
 
   isDragging = false;
 
-  onMessageChange() {
-    this.messageChange.emit(this.message);
+  onMessageInput(event: Event) {
+    const target = event.target as HTMLTextAreaElement;
+    console.log('Message input changed to:', target.value);
+    this.messageChange.emit(target.value);
   }
 
   onFileSelected(event: Event) {
@@ -28,6 +31,19 @@ export class EncodeWindowContentComponent {
 
   onEncode() {
     this.encode.emit();
+  }
+
+  resetEncode() {
+    this.reset.emit();
+  }
+
+  downloadAgain() {
+    if (this.encodedImageUrl) {
+      const link = document.createElement('a');
+      link.href = this.encodedImageUrl;
+      link.download = 'encoded.png';
+      link.click();
+    }
   }
 
   onDragOver(event: DragEvent) {

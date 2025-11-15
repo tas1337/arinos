@@ -18,6 +18,10 @@ import { SettingsWindowContentComponent } from './os/components/settings-window-
 import { BrowserWindowContentComponent } from './os/components/browser-window-content.component';
 import { TopBarComponent } from './os/components/top-bar.component';
 import { TaskbarComponent } from './os/components/taskbar.component';
+import { ContextMenuComponent } from './os/components/context-menu.component';
+import { NoteWindowContentComponent } from './os/components/note-window-content.component';
+import { MenuBarComponent } from './os/components/menu-bar.component';
+import { TutorialOverlayComponent } from './os/components/tutorial-overlay.component';
 import { SafeUrlPipe } from './os/pipes/safe-url.pipe';
 
 @NgModule({
@@ -35,6 +39,10 @@ import { SafeUrlPipe } from './os/pipes/safe-url.pipe';
     BrowserWindowContentComponent,
     TopBarComponent,
     TaskbarComponent,
+    ContextMenuComponent,
+    NoteWindowContentComponent,
+    MenuBarComponent,
+    TutorialOverlayComponent,
     SafeUrlPipe
   ],
   imports: [

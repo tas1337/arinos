@@ -1,0 +1,15 @@
+<div class="context-menu" [style]="getMenuStyle()">
+  <div 
+    *ngFor="let item of items" 
+    class="context-menu-item"
+    [class.separator]="item.separator"
+    [class.disabled]="item.disabled"
+    (click)="!item.disabled && !item.separator && item.action && onItemClick(item.action)"
+  >
+    <span *ngIf="!item.separator" class="context-menu-item-content">
+      <span *ngIf="item.icon" class="context-menu-icon">{{ item.icon }}</span>
+      <span class="context-menu-label">{{ item.label }}</span>
+    </span>
+  </div>
+</div>
+

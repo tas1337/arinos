@@ -17,23 +17,34 @@ export class WindowManagerService {
     return this.windows$.value;
   }
 
-  openWindow(type: 'help' | 'encode' | 'decode' | 'files' | 'settings' | 'browser'): void {
+  openWindow(type: 'help' | 'encode' | 'decode' | 'files' | 'settings' | 'browser' | 'note', noteId?: string): void {
     const windows = this.windows$.value;
     
-    // Check if window already exists
-    const existingWindow = windows.find(w => w.type === type && !w.minimized);
-    if (existingWindow) {
-      existingWindow.minimized = false;
-      existingWindow.maximized = false;
-      this.bringToFront(existingWindow.id);
-      return;
+    // For note windows, check if this specific note is already open
+    if (type === 'note' && noteId) {
+      const existingWindow = windows.find(w => w.type === 'note' && w.noteId === noteId && !w.minimized);
+      if (existingWindow) {
+        existingWindow.minimized = false;
+        existingWindow.maximized = false;
+        this.bringToFront(existingWindow.id);
+        return;
+      }
+    } else {
+      // Check if window already exists (for non-note windows)
+      const existingWindow = windows.find(w => w.type === type && !w.minimized);
+      if (existingWindow) {
+        existingWindow.minimized = false;
+        existingWindow.maximized = false;
+        this.bringToFront(existingWindow.id);
+        return;
+      }
     }
 
     const windowId = `${type}-${Date.now()}`;
     
     // Center windows on screen
-    const windowWidth = 700;
-    const windowHeight = 600;
+    const windowWidth = type === 'note' ? 600 : 700;
+    const windowHeight = type === 'note' ? 500 : 600;
     const screenWidth = window.innerWidth || 1920;
     const screenHeight = window.innerHeight || 1080;
     
@@ -51,7 +62,8 @@ export class WindowManagerService {
       width: windowWidth,
       height: windowHeight,
       minimized: false,
-      maximized: false
+      maximized: false,
+      noteId: type === 'note' ? noteId : undefined
     };
 
     this.windows$.next([...windows, newWindow]);
@@ -117,7 +129,7 @@ export class WindowManagerService {
     return this.zIndexCounter + (index >= 0 ? index : 0);
   }
 
-  getWindowTitle(type: string): string {
+  getWindowTitle(type: string, noteName?: string): string {
     switch(type) {
       case 'help': return 'How It Works';
       case 'encode': return 'Encode Message';
@@ -125,6 +137,7 @@ export class WindowManagerService {
       case 'files': return 'Files';
       case 'settings': return 'Settings';
       case 'browser': return 'Browser';
+      case 'note': return noteName || 'Note';
       default: return 'Window';
     }
   }

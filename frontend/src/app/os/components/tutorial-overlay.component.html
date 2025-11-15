@@ -1,0 +1,24 @@
+<div class="tutorial-overlay" *ngIf="showTutorial">
+  <div class="tutorial-content">
+    <div class="tutorial-box" [style.left.px]="getTutorialBoxPosition().x" [style.top.px]="getTutorialBoxPosition().y">
+      <div class="tutorial-text">
+        <p class="mvp-text">This is the core MVP</p>
+        <p class="instruction-text">Double click to open</p>
+      </div>
+      <button class="close-tutorial-btn" (click)="closeTutorial()">Close</button>
+    </div>
+  </div>
+  
+  <!-- Highlight areas for encode and decode icons -->
+  <div 
+    class="icon-highlight encode-highlight"
+    [style.left.px]="getEncodeIconPosition().x + 5"
+    [style.top.px]="getEncodeIconPosition().y"
+  ></div>
+  <div 
+    class="icon-highlight decode-highlight"
+    [style.left.px]="getDecodeIconPosition().x + 5"
+    [style.top.px]="getDecodeIconPosition().y"
+  ></div>
+</div>
+

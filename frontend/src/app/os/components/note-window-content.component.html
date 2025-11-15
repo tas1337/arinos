@@ -1,0 +1,27 @@
+<div class="note-window-content">
+  <div class="note-header">
+    <div class="note-title" *ngIf="!isRenaming" (dblclick)="startRenaming()">
+      <span class="note-icon">📝</span>
+      <span class="note-name">{{ note?.name || 'Untitled Note' }}</span>
+      <span class="rename-hint">(double-click to rename)</span>
+    </div>
+    <input 
+      *ngIf="isRenaming"
+      class="note-name-input"
+      [(ngModel)]="newName"
+      (blur)="saveRename()"
+      (keydown)="onKeyDown($event)"
+      #nameInput
+      (focus)="nameInput.select()"
+    />
+  </div>
+  <div class="note-editor">
+    <textarea
+      [(ngModel)]="content"
+      (ngModelChange)="onContentChange()"
+      placeholder="Start typing your note here..."
+      class="note-textarea"
+    ></textarea>
+  </div>
+</div>
+

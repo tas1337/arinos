@@ -1,20 +1,15 @@
 app = "stego-app"
-# Using cheapest region (iad is one of the cheapest)
 primary_region = "iad"
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = "deployment/Dockerfile"
   build_context = "."
 
 [http_service]
   internal_port = 8080
   force_https = true
-  # Cost optimization: Auto-stop machines when idle (saves money)
   auto_stop_machines = true
   auto_start_machines = true
-  # Scale to zero when not in use (cheapest option)
-  # Set to 1 if you want it always running (faster startup, ~$1.80/month)
-  # Set to 0 if you want it to stop when idle (free tier, ~5-10s startup)
   min_machines_running = 0
   max_machines_running = 1
   processes = ["app"]
@@ -44,10 +39,8 @@ primary_region = "iad"
   PORT = "8080"
   NODE_ENV = "production"
 
-# CHEAPEST VM CONFIGURATION
-# Using shared CPU (cheapest), minimal resources
 [[vm]]
-  cpu_kind = "shared"  # Shared CPU is cheapest
-  cpus = 1             # Minimum CPU
-  memory_mb = 256      # Minimum memory (256MB is Fly.io minimum for most apps)
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
 

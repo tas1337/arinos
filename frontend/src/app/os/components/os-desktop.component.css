@@ -58,3 +58,34 @@
   max-width: 400px;
 }
 
+.note-icon-container {
+  z-index: 60;
+  cursor: pointer;
+}
+
+.note-icon-container.dragging {
+  z-index: 1000;
+  opacity: 0.8;
+  cursor: grabbing;
+}
+
+/* Make encode and decode icons visible above tutorial overlay only when tutorial is active */
+app-desktop-icon.encode-decode-icon.tutorial-active {
+  z-index: 100005 !important;
+  position: relative;
+}
+
+app-desktop-icon.encode-decode-icon.tutorial-active .desktop-icon {
+  z-index: 100005 !important;
+  position: relative;
+}
+
+/* Normal z-index when tutorial is not active */
+app-desktop-icon.encode-decode-icon:not(.tutorial-active) {
+  z-index: 50;
+}
+
+app-desktop-icon.encode-decode-icon:not(.tutorial-active) .desktop-icon {
+  z-index: 50;
+}
+

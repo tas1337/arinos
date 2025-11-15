@@ -41,6 +41,12 @@ app.post('/api/encode', upload.single('image'), async (req, res) => {
     const message = req.body.message || stego.defaultMessage;
     const addPrompt = req.body.addPrompt === 'true' || req.body.addPrompt === true;
 
+    console.log('Received encode request:');
+    console.log('  Message:', message);
+    console.log('  Message length:', message.length);
+    console.log('  Add prompt:', addPrompt);
+    console.log('  req.body:', req.body);
+
     // Read uploaded file
     const imageBuffer = await fs.readFile(req.file.path);
 

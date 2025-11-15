@@ -54,8 +54,8 @@ export class StartMenuComponent {
   }
 
   onItemClick(action: string) {
-    if (action && action !== 'shutdown' && action !== 'settings' && action !== 'files' && action !== 'deploy' && action !== 'browser' && action !== 'document' && action !== 'image' && action !== 'report') {
-      this.openWindow.emit(action as 'help' | 'encode' | 'decode');
+    if (action === 'help' || action === 'encode' || action === 'decode' || action === 'settings' || action === 'files' || action === 'browser') {
+      this.openWindow.emit(action);
     }
     this.close();
   }

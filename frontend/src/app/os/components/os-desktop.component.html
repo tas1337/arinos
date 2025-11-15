@@ -1,4 +1,7 @@
 <div class="desktop">
+  <!-- Tutorial Overlay -->
+  <app-tutorial-overlay #tutorialOverlay></app-tutorial-overlay>
+  
   <!-- Desktop Background -->
   <div class="desktop-background"></div>
   
@@ -9,20 +12,38 @@
     [label]="getIconLabel(iconPos.id)"
     [x]="iconPos.x"
     [y]="iconPos.y"
+    [class.encode-decode-icon]="iconPos.id === 'encode' || iconPos.id === 'decode'"
+    [class.tutorial-active]="tutorialActive"
     (doubleClick)="openWindow(iconPos.id)"
     (positionChange)="updateIconPosition(iconPos.id, $event.x, $event.y)"
   ></app-desktop-icon>
 
+  <!-- Note Icons -->
+  <div
+    *ngFor="let note of notes"
+    class="desktop-icon note-icon-container"
+    [class.dragging]="noteDragState.noteId === note.id && noteDragState.isDragging"
+    [attr.data-note-id]="note.id"
+    [style.left.px]="note.x"
+    [style.top.px]="note.y"
+    (mousedown)="onNoteIconMouseDown($event, note.id)"
+    (dblclick)="onNoteDoubleClick(note.id)"
+  >
+    <div class="icon-image">📝</div>
+    <div class="icon-label">{{ note.name }}</div>
+  </div>
+
   <!-- Windows -->
   <app-window
     *ngFor="let window of windows; trackBy: trackByWindowId"
-    [title]="getWindowTitle(window.type)"
+    [title]="getWindowTitle(window)"
     [x]="window.x"
     [y]="window.y"
     [width]="window.width"
     [height]="window.height"
     [minimized]="window.minimized"
     [maximized]="window.maximized"
+    [windowType]="window.type"
     [style.z-index]="getZIndex(window.id)"
     (close)="closeWindow(window.id)"
     (minimize)="minimizeWindow(window.id)"
@@ -45,6 +66,7 @@
       (messageChange)="message = $event"
       (fileSelected)="onFileSelected($event, 'encode')"
       (encode)="encodeImage()"
+      (reset)="resetEncode()"
     ></app-encode-window-content>
 
     <!-- Decode Window -->
@@ -56,6 +78,7 @@
       [loading]="loading && operationMode === 'decode'"
       (fileSelected)="onFileSelected($event, 'decode')"
       (decode)="decodeImage()"
+      (reset)="resetDecode()"
     ></app-decode-window-content>
 
     <!-- Files Window -->
@@ -72,12 +95,28 @@
     <app-browser-window-content 
       *ngIf="window.type === 'browser'"
     ></app-browser-window-content>
+
+    <!-- Note Window -->
+    <app-note-window-content 
+      *ngIf="window.type === 'note' && window.noteId"
+      [noteId]="window.noteId"
+    ></app-note-window-content>
   </app-window>
 
   <!-- Error Display -->
   <div *ngIf="error" class="error-toast">
     <strong>Error:</strong> {{ error }}
   </div>
+
+  <!-- Context Menu -->
+  <app-context-menu
+    *ngIf="showContextMenu"
+    [x]="contextMenuX"
+    [y]="contextMenuY"
+    [items]="contextMenuItems"
+    (itemClick)="onContextMenuItemClick($event)"
+    (close)="closeContextMenu()"
+  ></app-context-menu>
 
   <!-- Taskbar -->
   <app-taskbar (openWindow)="onTaskbarOpenWindow($event)"></app-taskbar>

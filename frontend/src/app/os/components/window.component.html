@@ -8,7 +8,7 @@
   [class.maximized]="maximized"
   (mousedown)="focus.emit()"
 >
-  <div class="window-titlebar" (mousedown)="onMouseDown($event, 'drag')" (click)="$event.stopPropagation()">
+  <div class="window-titlebar" (mousedown)="onMouseDown($event, 'drag')" (dblclick)="onTitleBarDoubleClick()" (click)="$event.stopPropagation()">
     <div class="window-title">{{ title }}</div>
     <div class="window-controls">
       <button class="window-btn minimize-btn" (click)="onMinimize()" title="Minimize">−</button>
@@ -16,6 +16,7 @@
       <button class="window-btn close-btn" (click)="onClose()" title="Close">×</button>
     </div>
   </div>
+  <app-menu-bar [menus]="getMenus()"></app-menu-bar>
   <div class="window-content">
     <ng-content></ng-content>
   </div>

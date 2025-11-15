@@ -19,9 +19,55 @@
     <app-start-menu (openWindow)="onStartMenuOpen($event)"></app-start-menu>
   </div>
   <div class="taskbar-right">
-    <div class="taskbar-icon" title="WiFi">📶</div>
-    <div class="taskbar-icon" title="Sound">🔊</div>
+    <div class="taskbar-icon" (click)="toggleWifi($event)" title="WiFi">📶</div>
+    <div class="taskbar-icon" (click)="toggleVolume($event)" title="Sound">🔊</div>
     <div class="taskbar-time">{{ currentTime }}</div>
+    
+    <!-- WiFi Popup -->
+    <div class="system-popup wifi-popup" *ngIf="showWifiPopup" (click)="$event.stopPropagation()">
+      <div class="popup-header">
+        <h3>WiFi Networks</h3>
+        <button class="popup-close" (click)="showWifiPopup = false">×</button>
+      </div>
+      <div class="wifi-list">
+        <div class="wifi-item" *ngFor="let network of wifiNetworks" 
+             [class.connected]="network.connected"
+             (click)="connectToWifi(network)">
+          <span class="wifi-icon">{{ getWifiIcon(network.signal) }}</span>
+          <div class="wifi-info">
+            <div class="wifi-name">{{ network.name }}</div>
+            <div class="wifi-status" *ngIf="network.connected">Connected</div>
+          </div>
+          <span class="wifi-lock" *ngIf="network.secured">🔒</span>
+        </div>
+      </div>
+      <div class="popup-footer">
+        <small>Simulated WiFi - connects to actual networks</small>
+      </div>
+    </div>
+    
+    <!-- Volume Popup -->
+    <div class="system-popup volume-popup" *ngIf="showVolumePopup" (click)="$event.stopPropagation()">
+      <div class="popup-header">
+        <h3>Volume</h3>
+        <button class="popup-close" (click)="showVolumePopup = false">×</button>
+      </div>
+      <div class="volume-control">
+        <div class="volume-icon-display">{{ getVolumeIcon() }}</div>
+        <input 
+          type="range" 
+          class="volume-slider" 
+          min="0" 
+          max="100" 
+          [(ngModel)]="volumeLevel"
+          (input)="onVolumeChange()"
+        >
+        <div class="volume-level">{{ volumeLevel }}%</div>
+      </div>
+      <div class="popup-footer">
+        <small>Controls system volume</small>
+      </div>
+    </div>
   </div>
 </div>
 

@@ -13,8 +13,10 @@ export class DecodeWindowContentComponent {
 
   @Output() fileSelected = new EventEmitter<Event>();
   @Output() decode = new EventEmitter<void>();
+  @Output() reset = new EventEmitter<void>();
 
   isDragging = false;
+  copied = false;
 
   onFileSelected(event: Event) {
     this.fileSelected.emit(event);
@@ -22,6 +24,22 @@ export class DecodeWindowContentComponent {
     setTimeout(() => {
       this.decode.emit();
     }, 100);
+  }
+
+  resetDecode() {
+    this.copied = false;
+    this.reset.emit();
+  }
+
+  copyToClipboard() {
+    if (this.decodedMessage) {
+      navigator.clipboard.writeText(this.decodedMessage).then(() => {
+        this.copied = true;
+        setTimeout(() => {
+          this.copied = false;
+        }, 2000);
+      });
+    }
   }
 
   onDragOver(event: DragEvent) {

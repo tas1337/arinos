@@ -1,11 +1,13 @@
 <div class="window-content-inner">
   <div class="encode-container">
+    <!-- Initial State: No file selected -->
     <div class="drop-zone" 
+         *ngIf="!encodeFile"
          (dragover)="onDragOver($event)"
          (dragleave)="onDragLeave($event)"
          (drop)="onDrop($event)"
          [class.dragging]="isDragging">
-      <div class="drop-content" *ngIf="!encodeFile">
+      <div class="drop-content">
         <div class="drop-icon">📁</div>
         <p class="drop-text">Drag & Drop Image Here</p>
         <p class="drop-hint">or click to select</p>
@@ -18,26 +20,55 @@
         >
         <label for="encodeFileInput" class="file-label-btn">Select Image</label>
       </div>
-      <div class="file-preview" *ngIf="encodeFile && !encodedImageUrl">
-        <img [src]="encodePreviewUrl" alt="Preview" class="preview-img">
-        <p class="file-name">{{ encodeFile.name }}</p>
-      </div>
-      <div class="encoded-result" *ngIf="encodedImageUrl">
-        <img [src]="encodedImageUrl" alt="Encoded" class="preview-img">
-        <p class="success-text">✓ Encoded Successfully</p>
-      </div>
     </div>
 
-    <div class="message-section" *ngIf="encodeFile && !encodedImageUrl">
-      <textarea 
-        [(ngModel)]="message"
-        placeholder="Enter your message here..."
-        class="message-input"
-        rows="4"
-      ></textarea>
-      <button class="encode-btn" (click)="onEncode()" [disabled]="loading || !message.trim()">
-        {{ loading ? 'Encoding...' : 'Encode' }}
-      </button>
+    <!-- File selected: Show compact layout -->
+    <div class="result-layout" *ngIf="encodeFile">
+      <div class="image-preview-section">
+        <div class="image-thumbnail">
+          <img [src]="encodePreviewUrl" alt="Preview">
+        </div>
+        <div class="image-info">
+          <p class="file-name">{{ encodeFile.name }}</p>
+          <button class="action-btn secondary" (click)="resetEncode()">Choose Different Image</button>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <!-- Show message input if not yet encoded -->
+        <div *ngIf="!encodedImageUrl" class="message-section">
+          <label class="section-label">Hidden Message</label>
+          <textarea 
+            [value]="message"
+            (input)="onMessageInput($event)"
+            placeholder="Enter your secret message here..."
+            class="message-input"
+            rows="6"
+          ></textarea>
+          <button class="action-btn primary" (click)="onEncode()" [disabled]="loading || !message.trim()">
+            <span *ngIf="!loading">🔒 Encode Message</span>
+            <span *ngIf="loading">
+              <span class="spinner-small"></span> Encoding...
+            </span>
+          </button>
+        </div>
+
+        <!-- Show success state after encoding -->
+        <div *ngIf="encodedImageUrl" class="success-section">
+          <div class="success-header">
+            <div class="success-icon">✓</div>
+            <h3>Message Encoded Successfully!</h3>
+          </div>
+          <div class="encoded-preview">
+            <img [src]="encodedImageUrl" alt="Encoded">
+          </div>
+          <p class="success-info">Your message has been hidden in the image. The file was automatically downloaded.</p>
+          <div class="action-buttons">
+            <button class="action-btn secondary" (click)="downloadAgain()">↓ Download Again</button>
+            <button class="action-btn primary" (click)="resetEncode()">Encode Another</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

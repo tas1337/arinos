@@ -1,6 +1,18 @@
+:host {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.window-content-inner {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .files-container {
-  display: flex;
-  height: 100%;
+  display: flex !important;
+  height: 100% !important;
   gap: 1px;
   background: rgba(255, 255, 255, 0.05);
 }

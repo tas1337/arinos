@@ -39,6 +39,12 @@ export class SteganographyService {
     formData.append('message', request.message);
     formData.append('addPrompt', request.addPrompt.toString());
 
+    console.log('Sending encode request with message:', request.message);
+    console.log('FormData contents:');
+    for (let pair of (formData as any).entries()) {
+      console.log('  ' + pair[0] + ': ' + (pair[1] instanceof File ? pair[1].name : pair[1]));
+    }
+
     return this.http.post(`${this.apiUrl}/encode`, formData, { responseType: 'blob' });
   }
 

@@ -1,0 +1,58 @@
+<div class="menu-bar">
+  <div 
+    *ngFor="let menu of menus; let i = index" 
+    class="menu-item"
+    [class.active]="activeMenu === menu.label"
+    (click)="onMenuClick(menu.label, $event)"
+    #menuItem
+  >
+    {{ menu.label }}
+  </div>
+  
+  <!-- Dropdown Menu -->
+  <div 
+    *ngIf="activeMenu" 
+    class="menu-dropdown"
+    [style.left.px]="getDropdownPosition(activeMenu)"
+    (click)="$event.stopPropagation()"
+    (mousedown)="$event.stopPropagation()"
+  >
+    <div 
+      *ngFor="let item of getMenuItems(activeMenu)"
+      class="menu-dropdown-item"
+      [class.disabled]="item.disabled"
+      [class.separator]="item.separator"
+      [class.has-submenu]="item.submenu && item.submenu.length > 0"
+      (mouseenter)="onMenuItemHover(item)"
+      (click)="onMenuItemClick(item, $event)"
+    >
+      <span *ngIf="!item.separator" class="menu-item-content">
+        <span *ngIf="item.icon" class="menu-icon">{{ item.icon }}</span>
+        <span class="menu-label">{{ item.label }}</span>
+        <span *ngIf="item.submenu && item.submenu.length > 0" class="menu-arrow">▶</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Submenu -->
+  <div 
+    *ngIf="activeSubmenu && activeSubmenu.submenu && activeSubmenu.submenu.length > 0" 
+    class="menu-submenu"
+    [style.left.px]="getSubmenuPosition()"
+    [style.top.px]="getSubmenuTopPosition(activeSubmenu)"
+  >
+    <div 
+      *ngFor="let subItem of activeSubmenu.submenu"
+      class="menu-dropdown-item"
+      [class.disabled]="subItem.disabled"
+      [class.separator]="subItem.separator"
+      (click)="onMenuItemClick(subItem, $event)"
+    >
+      <span *ngIf="!subItem.separator" class="menu-item-content">
+        <span *ngIf="subItem.icon" class="menu-icon">{{ subItem.icon }}</span>
+        <span class="menu-label">{{ subItem.label }}</span>
+      </span>
+    </div>
+  </div>
+</div>
+

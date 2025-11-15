@@ -1,11 +1,13 @@
 <div class="window-content-inner">
   <div class="decode-container">
+    <!-- Initial State: No file selected -->
     <div class="drop-zone" 
+         *ngIf="!decodeFile"
          (dragover)="onDragOver($event)"
          (dragleave)="onDragLeave($event)"
          (drop)="onDrop($event)"
          [class.dragging]="isDragging">
-      <div class="drop-content" *ngIf="!decodeFile && !decodedMessage">
+      <div class="drop-content">
         <div class="drop-icon">📁</div>
         <p class="drop-text">Drag & Drop Image Here</p>
         <p class="drop-hint">or click to select</p>
@@ -18,16 +20,38 @@
         >
         <label for="decodeFileInput" class="file-label-btn">Select Image</label>
       </div>
-      <div class="file-preview" *ngIf="decodeFile && !decodedMessage">
-        <img [src]="decodePreviewUrl" alt="Preview" class="preview-img">
-        <p class="file-name">{{ decodeFile.name }}</p>
-        <p class="decoding-text" *ngIf="loading">Decoding...</p>
+    </div>
+
+    <!-- File selected: Show compact preview and result -->
+    <div class="result-layout" *ngIf="decodeFile">
+      <div class="image-preview-section">
+        <div class="image-thumbnail">
+          <img [src]="decodePreviewUrl" alt="Preview">
+        </div>
+        <div class="image-info">
+          <p class="file-name">{{ decodeFile.name }}</p>
+          <button class="action-btn secondary" (click)="resetDecode()">Choose Different Image</button>
+        </div>
       </div>
-      <div class="decoded-result" *ngIf="decodedMessage">
-        <img [src]="decodePreviewUrl" alt="Decoded" class="preview-img">
-        <div class="message-box">
-          <h3>Decoded Message:</h3>
+
+      <div class="result-section">
+        <div *ngIf="loading" class="loading-state">
+          <div class="spinner"></div>
+          <p>Decoding message...</p>
+        </div>
+
+        <div *ngIf="!loading && decodedMessage" class="message-box">
+          <div class="message-header">
+            <h3>Decoded Message</h3>
+            <button class="copy-btn" (click)="copyToClipboard()" title="Copy to clipboard">
+              {{ copied ? '✓ Copied' : '📋 Copy' }}
+            </button>
+          </div>
           <div class="message-content">{{ decodedMessage }}</div>
+        </div>
+
+        <div *ngIf="!loading && !decodedMessage && decodeFile" class="empty-state">
+          <p>No hidden message found in this image.</p>
         </div>
       </div>
     </div>

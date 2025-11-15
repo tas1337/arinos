@@ -165,7 +165,7 @@ class Steganography {
           
           <!-- Pattern markers along edges - subtle but detectable -->
           <circle cx="${width/2}" cy="20" r="3" fill="rgba(255,255,255,${markerOpacity})"/>
-          <circle cx="${width/2}" y="${height - 20}" r="3" fill="rgba(255,255,255,${markerOpacity})"/>
+          <circle cx="${width/2}" cy="${height - 20}" r="3" fill="rgba(255,255,255,${markerOpacity})"/>
           <circle cx="20" cy="${height/2}" r="3" fill="rgba(255,255,255,${markerOpacity})"/>
           <circle cx="${width - 20}" cy="${height/2}" r="3" fill="rgba(255,255,255,${markerOpacity})"/>
           

@@ -13,6 +13,16 @@
   touch-action: none;
 }
 
+/* Encode and decode icons should be above tutorial ONLY when tutorial is active */
+.encode-decode-icon.tutorial-active .desktop-icon {
+  z-index: 100005 !important;
+}
+
+/* Normal z-index when tutorial is not active */
+.encode-decode-icon:not(.tutorial-active) .desktop-icon {
+  z-index: 50;
+}
+
 @media (max-width: 768px) {
   .desktop-icon {
     width: 70px;
