@@ -101,6 +101,12 @@
       *ngIf="window.type === 'note' && window.noteId"
       [noteId]="window.noteId"
     ></app-note-window-content>
+
+    <!-- PDF Viewer Window -->
+    <app-pdf-viewer-window-content 
+      *ngIf="window.type === 'pdf' && window.pdfPath"
+      [pdfPath]="window.pdfPath"
+    ></app-pdf-viewer-window-content>
   </app-window>
 
   <!-- Error Display -->

@@ -22,6 +22,7 @@ import { ContextMenuComponent } from './os/components/context-menu.component';
 import { NoteWindowContentComponent } from './os/components/note-window-content.component';
 import { MenuBarComponent } from './os/components/menu-bar.component';
 import { TutorialOverlayComponent } from './os/components/tutorial-overlay.component';
+import { PdfViewerWindowContentComponent } from './os/components/pdf-viewer-window-content.component';
 import { SafeUrlPipe } from './os/pipes/safe-url.pipe';
 
 @NgModule({
@@ -43,6 +44,7 @@ import { SafeUrlPipe } from './os/pipes/safe-url.pipe';
     NoteWindowContentComponent,
     MenuBarComponent,
     TutorialOverlayComponent,
+    PdfViewerWindowContentComponent,
     SafeUrlPipe
   ],
   imports: [

@@ -23,7 +23,8 @@ export class OSDesktopComponent implements OnInit, OnDestroy {
     { id: 'decode', x: 20, y: 220 },
     { id: 'settings', x: 20, y: 320 },
     { id: 'files', x: 20, y: 420 },
-    { id: 'browser', x: 20, y: 520 }
+    { id: 'browser', x: 20, y: 520 },
+    { id: 'resume', x: 20, y: 620 }
   ];
 
   // Steganography state
@@ -435,6 +436,9 @@ export class OSDesktopComponent implements OnInit, OnDestroy {
       if (type === 'encode' || type === 'decode') {
         this.closeTutorial();
       }
+    } else if (type === 'resume') {
+      // Open resume PDF in a window
+      this.windowManager.openWindow('pdf', undefined, 'resume.pdf');
     }
   }
 
@@ -551,6 +555,9 @@ export class OSDesktopComponent implements OnInit, OnDestroy {
     if (window.type === 'note' && window.noteId) {
       const note = this.notes.find(n => n.id === window.noteId);
       return this.windowManager.getWindowTitle(window.type, note?.name);
+    } else if (window.type === 'pdf' && window.pdfPath) {
+      const pdfName = window.pdfPath.split('/').pop() || 'Document';
+      return this.windowManager.getWindowTitle(window.type, undefined, pdfName);
     }
     return this.windowManager.getWindowTitle(window.type);
   }
@@ -612,7 +619,8 @@ export class OSDesktopComponent implements OnInit, OnDestroy {
       'decode': '🔓',
       'settings': '⚙️',
       'files': '📁',
-      'browser': '🌐'
+      'browser': '🌐',
+      'resume': '📄'
     };
     return icons[id] || '📄';
   }
@@ -624,7 +632,8 @@ export class OSDesktopComponent implements OnInit, OnDestroy {
       'decode': 'Decode',
       'settings': 'Settings',
       'files': 'Files',
-      'browser': 'Browser'
+      'browser': 'Browser',
+      'resume': 'Resume'
     };
     return labels[id] || 'App';
   }

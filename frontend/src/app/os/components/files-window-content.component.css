@@ -54,6 +54,11 @@
   background: rgba(255, 0, 150, 0.2);
 }
 
+.folder-item.active {
+  background: rgba(255, 0, 150, 0.3);
+  border: 1px solid rgba(255, 0, 150, 0.5);
+}
+
 .folder-icon {
   font-size: 18px;
 }

@@ -17,7 +17,7 @@ export class WindowManagerService {
     return this.windows$.value;
   }
 
-  openWindow(type: 'help' | 'encode' | 'decode' | 'files' | 'settings' | 'browser' | 'note', noteId?: string): void {
+  openWindow(type: 'help' | 'encode' | 'decode' | 'files' | 'settings' | 'browser' | 'note' | 'pdf', noteId?: string, pdfPath?: string): void {
     const windows = this.windows$.value;
     
     // For note windows, check if this specific note is already open
@@ -29,8 +29,17 @@ export class WindowManagerService {
         this.bringToFront(existingWindow.id);
         return;
       }
+    } else if (type === 'pdf' && pdfPath) {
+      // For PDF windows, check if this specific PDF is already open
+      const existingWindow = windows.find(w => w.type === 'pdf' && w.pdfPath === pdfPath && !w.minimized);
+      if (existingWindow) {
+        existingWindow.minimized = false;
+        existingWindow.maximized = false;
+        this.bringToFront(existingWindow.id);
+        return;
+      }
     } else {
-      // Check if window already exists (for non-note windows)
+      // Check if window already exists (for non-note, non-pdf windows)
       const existingWindow = windows.find(w => w.type === type && !w.minimized);
       if (existingWindow) {
         existingWindow.minimized = false;
@@ -43,8 +52,8 @@ export class WindowManagerService {
     const windowId = `${type}-${Date.now()}`;
     
     // Center windows on screen
-    const windowWidth = type === 'note' ? 600 : 700;
-    const windowHeight = type === 'note' ? 500 : 600;
+    const windowWidth = type === 'note' ? 600 : type === 'pdf' ? 900 : 700;
+    const windowHeight = type === 'note' ? 500 : type === 'pdf' ? 700 : 600;
     const screenWidth = window.innerWidth || 1920;
     const screenHeight = window.innerHeight || 1080;
     
@@ -63,7 +72,8 @@ export class WindowManagerService {
       height: windowHeight,
       minimized: false,
       maximized: false,
-      noteId: type === 'note' ? noteId : undefined
+      noteId: type === 'note' ? noteId : undefined,
+      pdfPath: type === 'pdf' ? pdfPath : undefined
     };
 
     this.windows$.next([...windows, newWindow]);
@@ -129,7 +139,7 @@ export class WindowManagerService {
     return this.zIndexCounter + (index >= 0 ? index : 0);
   }
 
-  getWindowTitle(type: string, noteName?: string): string {
+  getWindowTitle(type: string, noteName?: string, pdfName?: string): string {
     switch(type) {
       case 'help': return 'How It Works';
       case 'encode': return 'Encode Message';
@@ -138,6 +148,7 @@ export class WindowManagerService {
       case 'settings': return 'Settings';
       case 'browser': return 'Browser';
       case 'note': return noteName || 'Note';
+      case 'pdf': return pdfName || 'PDF Viewer';
       default: return 'Window';
     }
   }

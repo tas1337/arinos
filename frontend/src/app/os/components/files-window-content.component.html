@@ -3,7 +3,12 @@
     <div class="files-sidebar">
       <h3>Quick Access</h3>
       <div class="folder-list">
-        <div *ngFor="let folder of folders" class="folder-item">
+        <div 
+          *ngFor="let folder of folders" 
+          class="folder-item"
+          [class.active]="currentFolder === folder.name"
+          (click)="onFolderClick(folder)"
+        >
           <span class="folder-icon">{{ folder.icon }}</span>
           <span class="folder-name">{{ folder.name }}</span>
           <span class="folder-count">({{ folder.items }})</span>
@@ -16,10 +21,10 @@
         <button class="toolbar-btn">→ Forward</button>
         <button class="toolbar-btn">↑ Up</button>
         <div class="toolbar-spacer"></div>
-        <input type="text" class="path-input" value="C:\Users\User\Desktop" readonly>
+        <input type="text" class="path-input" [value]="'C:\\Users\\User\\' + currentFolder" readonly>
       </div>
       <div class="files-grid">
-        <div *ngFor="let file of recentFiles" class="file-item">
+        <div *ngFor="let file of currentFiles" class="file-item" (dblclick)="onFileClick(file)">
           <div class="file-icon">{{ file.icon }}</div>
           <div class="file-name">{{ file.name }}</div>
           <div class="file-meta">{{ file.size }} • {{ file.date }}</div>
